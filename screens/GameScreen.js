@@ -1,8 +1,12 @@
 import { Alert, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+
 import Title from "../components/UI/Title";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/UI/PrimaryButton";
+import Card from "../components/UI/Card";
+import InstructionText from "../components/UI/InstructionText";
 
 const generateRandomBetween = (min, max, exclude) => {
   const rndNum = Math.floor(Math.random() * (max - min) + min);
@@ -26,6 +30,11 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       onGameOver();
     }
   }, [currentGuess, userNumber, onGameOver]);
+
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
 
   const nextGuessHandler = (direction) => {
     if (
@@ -54,17 +63,23 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     <View style={styles.screen}>
       <Title style={styles.title}>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <View>
-        <Title>Higher or Lower?</Title>
-        <View>
-          <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
-            +
-          </PrimaryButton>
-          <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-            -
-          </PrimaryButton>
+      <Card>
+        <InstructionText style={styles.InstructionText}>
+          Higher or Lower?
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+              <Ionicons name="md-add" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+              <Ionicons name="md-remove" size={24} color="white" />
+            </PrimaryButton>
+          </View>
         </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -73,7 +88,17 @@ export default GameScreen;
 
 const styles = StyleSheet.create({
   screen: {
+    marginTop: 60,
     flex: 1,
     padding: 40,
+  },
+  InstructionText: {
+    marginBottom: 12,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });

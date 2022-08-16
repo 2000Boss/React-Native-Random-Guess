@@ -20,10 +20,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 30,
   },
   numberText: {
     color: Colors.accent500,
     fontSize: 36,
     fontWeight: "bold",
+    // fontFamily: "open-sans-bold",
   },
 });
