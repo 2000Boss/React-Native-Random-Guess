@@ -1,4 +1,10 @@
-import { Alert, StyleSheet, View, Text, FlatList } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  View,
+  FlatList,
+  useWindowDimensions,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -26,6 +32,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
   const initValue = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initValue);
   const [guessRound, setGuessRound] = useState([initValue]);
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -64,9 +71,8 @@ const GameScreen = ({ userNumber, onGameOver }) => {
 
   const guessRoundListLength = guessRound.length;
 
-  return (
-    <View style={styles.screen}>
-      <Title style={styles.title}>Opponent's Guess</Title>
+  let content = (
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
         <InstructionText style={styles.InstructionText}>
@@ -85,6 +91,13 @@ const GameScreen = ({ userNumber, onGameOver }) => {
           </View>
         </View>
       </Card>
+    </>
+  );
+
+  return (
+    <View style={styles.screen}>
+      <Title style={styles.title}>Opponent's Guess</Title>
+      {content}
       <View style={styles.listContainer}>
         {/* {guessRound.map((guessRounds) => (
           <Text key={guessRounds}>{guessRounds}</Text>
@@ -112,6 +125,7 @@ const styles = StyleSheet.create({
     marginTop: 60,
     flex: 1,
     padding: 40,
+    alignItems: "center",
   },
   InstructionText: {
     marginBottom: 12,
