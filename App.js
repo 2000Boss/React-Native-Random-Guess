@@ -23,8 +23,9 @@ export default function App() {
     setGameOver(false);
   };
 
-  const gameOverHandler = () => {
+  const gameOverHandler = (numberOfRounds) => {
     setGameOver(true);
+    setGuessRound(numberOfRounds);
   };
 
   const startNewGameHandler = () => {
